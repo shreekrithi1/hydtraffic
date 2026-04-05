@@ -44,32 +44,32 @@ const bottleneckData = [
 
 export default function Analytics() {
   return (
-    <div className="flex-1 overflow-y-auto p-8 relative space-y-8 scrollbar-hide">
+    <div className="flex-1 overflow-y-auto p-4 md:p-8 relative space-y-6 md:space-y-8 scrollbar-hide font-sans">
       {/* Background Ambient Glows */}
       <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-accent-blue opacity-[0.03] blur-[150px] rounded-full pointer-events-none" />
       
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
         <div className="space-y-1">
-          <h1 className="text-4xl font-bold tracking-tight text-white flex items-center gap-4">
-            Hyderabad City Traffic Command Center Analytics
-            <div className="px-3 py-1 bg-accent-blue/10 border border-accent-blue/20 rounded-full flex items-center gap-2">
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white flex flex-wrap items-center gap-3 md:gap-4">
+            Flow Analytics
+            <div className="px-3 py-1 bg-accent-blue/10 border border-accent-blue/20 rounded-full flex items-center gap-2 shrink-0">
                <TrendingUp className="w-3 h-3 text-accent-blue" />
-               <span className="text-[10px] font-bold text-accent-blue font-mono uppercase">OPTIMIZATION: ACTIVE</span>
+               <span className="text-[10px] font-bold text-accent-blue font-mono uppercase">OPTIMIZED</span>
             </div>
           </h1>
-          <p className="text-slate-400 font-medium max-w-2xl">
-            Deep insights into the city's neural flow, people throughput vs. vehicle counts, and predictive bottleneck scores.
+          <p className="text-sm text-slate-400 font-medium max-w-2xl leading-relaxed">
+            Neural insights into traffic velocity, commuter throughput, and AI-predicted bottleneck scores for the IT corridor.
           </p>
         </div>
         
-        <div className="flex gap-4">
-          <button className="px-4 py-2.5 glass-panel border-white/10 text-white font-bold text-xs flex items-center gap-2 hover:bg-white/5 transition-all">
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">
+          <button className="flex-1 sm:flex-none px-4 py-2.5 glass-panel border-white/10 text-white font-bold text-[10px] flex items-center justify-center gap-2 hover:bg-white/5 transition-all uppercase tracking-widest">
             <Filter className="w-4 h-4" />
-             LAST 7 DAYS
+             Last 7 Days
           </button>
-          <button className="px-6 py-3 rounded-xl bg-accent-blue text-background font-bold text-sm transition-all hover:scale-[1.03] active:scale-95 shadow-lg shadow-accent-blue/10 flex items-center gap-2">
+          <button className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-accent-blue text-background font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95 uppercase tracking-tighter">
              <BarChart3 className="w-4 h-4" />
-             EXPORT REPORT
+             Export
           </button>
         </div>
       </div>
