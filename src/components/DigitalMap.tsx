@@ -89,16 +89,18 @@ export default function DigitalMap() {
         const { Map } = await (loader as any).importLibrary("maps");
         const mapObj = new Map(mapRef.current as HTMLElement, {
           center: { lat: 17.4483, lng: 78.3741 },
-          zoom: 15,
+          zoom: 17, // STREET-LEVEL DEFAULT ZOOM
           disableDefaultUI: false,
           zoomControl: true,
           scrollwheel: true,
           styles: [
             { elementType: "geometry", stylers: [{ color: "#020617" }] },
             { featureType: "road", elementType: "geometry", stylers: [{ color: "#1e293b" }] },
-            { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
+            { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#5eead4" }] }, // NEON CYAN LABELS
+            { featureType: "road", elementType: "labels.text.stroke", stylers: [{ color: "#020617" }] },
             { featureType: "water", elementType: "geometry", stylers: [{ color: "#0f172a" }] },
             { featureType: "poi", stylers: [{ visibility: "off" }] },
+            { featureType: "transit", stylers: [{ visibility: "on" }] }, // SHOW METRO/BUS STREAMS
           ],
         });
 
@@ -188,19 +190,32 @@ export default function DigitalMap() {
           {isDemoMode && CONNECTIONS.map(([fromId, toId], i) => {
             const from = DEMO_NODES.find(n => n.id === fromId)!;
             const to = DEMO_NODES.find(n => n.id === toId)!;
+            const isCritical = DEMO_NODES.find(n => n.id === fromId)!.congestion > 0.7;
+            
             return (
               <g key={i}>
-                <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="rgba(34,211,238,0.05)" strokeWidth="12" strokeLinecap="round" />
+                {/* BACKGROUND ROAD BED */}
+                <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="rgba(34,211,238,0.03)" strokeWidth="20" strokeLinecap="round" />
+                
+                {/* MULTI-LANE LANE 1 (LEFT) */}
                 <motion.line
-                  x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                  stroke={DEMO_NODES.find(n => n.id === fromId)!.congestion > 0.7 ? "var(--accent-red)" : "var(--accent-cyan)"} 
-                  strokeWidth="2" 
-                  strokeDasharray="4 16"
-                  initial={{ strokeDashoffset: 100 }}
-                  animate={{ strokeDashoffset: 0 }}
-                  transition={{ duration: 2 / (DEMO_NODES.find(n => n.id === fromId)!.congestion + 0.5), repeat: Infinity, ease: "linear" }}
-                  opacity={0.6}
-                  style={{ filter: "url(#glow-cyan)" }}
+                  x1={from.x - 4} y1={from.y - 4} x2={to.x - 4} y2={to.y - 4}
+                  stroke={isCritical ? "var(--accent-red)" : "var(--accent-cyan)"} strokeWidth="1.5" strokeDasharray="3 15"
+                  animate={{ strokeDashoffset: [100, 0] }}
+                  transition={{ duration: 1.5 / (from.congestion + 0.5), repeat: Infinity, ease: "linear" }}
+                  opacity={0.4}
+                />
+                
+                {/* CENTRAL FLOW DIVIDER */}
+                <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="1 10" />
+
+                {/* MULTI-LANE LANE 2 (RIGHT) */}
+                <motion.line
+                  x1={from.x + 4} y1={from.y + 4} x2={to.x + 4} y2={to.y + 4}
+                  stroke={isCritical ? "var(--accent-red)" : "var(--accent-cyan)"} strokeWidth="1.5" strokeDasharray="3 18"
+                  animate={{ strokeDashoffset: [100, 0] }}
+                  transition={{ duration: 2.5 / (from.congestion + 0.5), repeat: Infinity, ease: "linear" }}
+                  opacity={0.4}
                 />
               </g>
             );
