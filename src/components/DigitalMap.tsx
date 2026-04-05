@@ -11,7 +11,8 @@ import {
   Zap,
   Navigation2,
   Maximize2,
-  RefreshCcw
+  RefreshCcw,
+  Activity
 } from "lucide-react";
 
 const GOOGLE_MAPS_API_KEY = ""; // USER: INSERT API KEY HERE
@@ -188,53 +189,82 @@ export default function DigitalMap() {
           </motion.div>
         ))}
 
-        {/* Tactical HUD Overlays */}
-        <div className="absolute top-6 right-6 flex flex-col gap-3 pointer-events-none p-4 glass-panel bg-black/60 border-white/5 opacity-90 backdrop-blur-3xl max-w-[240px] z-40">
-           <div className="flex items-center justify-between mb-2">
-              <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Orchestration Stats</h4>
-              <Maximize2 size={10} className="text-slate-600" />
-           </div>
-           <p className="text-[10px] text-white/80 leading-relaxed font-medium">
-              Real-time synchronization between <span className="text-accent-cyan">Google Traffic layers</span> and Edge Node sensors is currently <span className="text-emerald-500">92.4% Optimal</span>.
-           </p>
-           <div className="h-px bg-white/5 my-1" />
-           <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase">
-              <span>GPS Density</span>
-              <span className="text-accent-cyan">8.4k data/min</span>
-           </div>
+        {/* Minimalist Map Status Footer (Only critical status) */}
+        <div className="absolute bottom-2 left-2 flex items-center gap-2 pointer-events-none z-40">
+           <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_var(--emerald-500)]" />
+           <span className="text-[8px] font-black text-white/40 uppercase tracking-widest font-mono">Telemetry_Sync_OK</span>
         </div>
+      </div>
 
-        <div className="absolute bottom-6 left-6 flex items-center gap-4 z-40">
-           <div className="flex items-center gap-2 bg-black/80 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
-              <div className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse" />
-              <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">Dynamic_Flow_Active</span>
-           </div>
-           <button 
-             onClick={() => setIsDemoMode(!isDemoMode)}
-             className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-md transition-all text-[9px] font-black text-white uppercase tracking-widest"
-           >
-              <RefreshCcw size={10} className={isDemoMode ? "animate-spin-slow" : ""} />
-              {isDemoMode ? "Enable Live Engine" : "Switch to Demo Map"}
-           </button>
-        </div>
+      {/* Robust Tactical Telemetry Hub (Moved below map to avoid obstruction) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+         <div className="glass-panel p-4 bg-white/2 border-white/10 flex flex-col gap-2 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-2 opacity-[0.03] group-hover:opacity-10 transition-opacity"><Zap size={48} /></div>
+            <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+               <Zap className="w-3 h-3 text-accent-cyan" />
+               Neural Flow Insight
+            </h4>
+            <p className="text-[11px] text-white/80 leading-relaxed font-medium">
+               Orchestration logic is processing <span className="text-accent-cyan">8.4k points/min</span> with <span className="text-accent-cyan">94.2% AI confidence</span>. Signal waves are optimized for Gachibowli-Hitech corridors.
+            </p>
+         </div>
 
-        {isDemoMode && (
-          <div className="absolute bottom-6 right-6 p-4 glass-panel bg-accent-orange/5 border-accent-orange/20 z-40 max-w-[200px]">
-             <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle size={12} className="text-accent-orange" />
-                <span className="text-[10px] font-bold text-accent-orange uppercase tracking-widest">Demo Mode</span>
-             </div>
-             <p className="text-[9px] text-slate-400 leading-tight">
-               Displaying high-fidelity static twin. <span className="text-white underline decoration-dotted">Insert Google API Key</span> for live corridor synchronization.
-             </p>
-          </div>
-        )}
+         <div className="glass-panel p-4 bg-white/2 border-white/10 flex flex-col justify-between gap-4">
+            <div className="flex items-center justify-between">
+               <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                  <Activity className="w-3 h-3 text-accent-orange" />
+                  System Orchestration
+               </h4>
+               <button 
+                 onClick={() => setIsDemoMode(!isDemoMode)}
+                 className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded border border-white/10 transition-all text-[9px] font-black text-white uppercase tracking-widest active:scale-95"
+               >
+                  <RefreshCcw size={10} className={isDemoMode ? "animate-spin-slow" : ""} />
+                  {isDemoMode ? "Enable Live Engine" : "Switch to Demo Map"}
+               </button>
+            </div>
+            <div className="flex justify-between items-end">
+               <div className="space-y-1">
+                  <span className="text-[8px] font-bold text-slate-500 uppercase">GPS Saturation</span>
+                  <p className="text-xl font-bold text-white font-mono leading-none">92.4%</p>
+               </div>
+               <div className="space-y-1 text-right">
+                  <span className="text-[8px] font-bold text-slate-500 uppercase">Latency</span>
+                  <p className="text-xl font-bold text-accent-cyan font-mono leading-none">12ms</p>
+               </div>
+            </div>
+         </div>
+
+         <div className="glass-panel p-4 bg-accent-orange/5 border-accent-orange/20 flex flex-col gap-2 relative">
+            <div className="flex items-center gap-2">
+               <AlertTriangle size={12} className={isDemoMode ? "text-accent-orange animate-pulse" : "text-white opacity-20"} />
+               <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  {isDemoMode ? "Demo Mode Active" : "Production Node"}
+               </h4>
+            </div>
+            <p className="text-[10px] text-slate-400 leading-tight">
+               {isDemoMode 
+                 ? "Displaying high-fidelity neural twin. Real-time Google layers require API synchronization in src/components/DigitalMap.tsx"
+                 : "Platform is synchronized with live city-brain feeds. All signals are currently under autonomous orchestration."
+               }
+            </p>
+            <div className="absolute bottom-2 right-2 flex gap-1">
+               <div className="w-1 h-1 rounded-full bg-accent-orange" />
+               <div className="w-1 h-1 rounded-full bg-slate-800" />
+               <div className="w-1 h-1 rounded-full bg-slate-800" />
+            </div>
+         </div>
       </div>
 
       <style jsx global>{`
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+        .neural-grid {
+          background-image: radial-gradient(circle at 1px 1px, rgba(34,211,238,0.1) 1px, transparent 0);
+          background-size: 30px 30px;
+        }
       `}</style>
     </div>
+
   );
 }
