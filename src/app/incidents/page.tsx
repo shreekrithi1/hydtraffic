@@ -53,27 +53,32 @@ export default function Incidents() {
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 md:p-8 relative space-y-6 md:space-y-8 scrollbar-hide font-sans">
+    <div className="flex-1 overflow-y-auto p-4 md:p-8 relative space-y-6 md:space-y-8 scrollbar-hide font-sans overflow-x-hidden">
       {/* Background Ambient Glows */}
       <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-accent-red opacity-[0.03] blur-[150px] rounded-full pointer-events-none" />
       
       <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
         <div className="space-y-1">
-          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white flex flex-wrap items-center gap-3 md:gap-4">
-            Incident Command
+          <h1 className="text-2xl md:text-5xl font-black tracking-tighter text-white flex flex-wrap items-center gap-3 md:gap-4 uppercase italic">
+            Incident Response
             <div className="px-3 py-1 bg-accent-red/10 border border-accent-red/20 rounded-full flex items-center gap-2 shrink-0">
                <AlertTriangle className="w-3 h-3 text-accent-red" />
-               <span className="text-[10px] font-bold text-accent-red font-mono uppercase">ALERTS_LIVE</span>
+               <span className="text-[10px] font-black text-accent-red font-mono uppercase tracking-widest">Auto_Resolve_ON</span>
             </div>
           </h1>
-          <p className="text-sm text-slate-400 font-medium max-w-2xl leading-relaxed">
-            Real-time automated incident detection using the <span className="text-white font-bold tracking-tighter">10-Second Threshold</span> rule from Hangzhou's City Brain.
-          </p>
+          <div className="flex flex-wrap items-center gap-4 mt-2">
+             <div className="flex items-center gap-2 px-2 py-0.5 bg-white/2 border border-white/5 rounded text-[9px] font-mono text-slate-500 uppercase tracking-tighter">
+                Avg_Resolution_Time: <span className="text-emerald-500">42s</span>
+             </div>
+             <div className="flex items-center gap-2 px-2 py-0.5 bg-white/2 border border-white/5 rounded text-[9px] font-mono text-slate-500 uppercase tracking-tighter">
+                Autonomous_Ratio: <span className="text-accent-red">94.2%</span>
+             </div>
+          </div>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">
-          <button className="w-full lg:w-auto px-6 py-3 rounded-xl bg-accent-red text-background font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95 uppercase tracking-tighter">
-             <Zap className="w-4 h-4 fill-current" />
+          <button className="w-full lg:w-auto px-6 py-3 rounded-xl bg-accent-red text-background font-black text-sm shadow-[0_0_20px_rgba(244,63,94,0.3)] flex items-center justify-center gap-2 transition-transform active:scale-95 uppercase tracking-tighter">
+             <Radio className="w-4 h-4 fill-current animate-pulse" />
              Emergency Broadcast
           </button>
         </div>

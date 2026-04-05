@@ -44,43 +44,45 @@ const bottleneckData = [
 
 export default function Analytics() {
   return (
-    <div className="flex-1 overflow-y-auto p-4 md:p-8 relative space-y-6 md:space-y-8 scrollbar-hide font-sans">
+    <div className="flex-1 overflow-y-auto p-4 md:p-8 relative space-y-6 md:space-y-8 scrollbar-hide font-sans overflow-x-hidden">
       {/* Background Ambient Glows */}
       <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-accent-blue opacity-[0.03] blur-[150px] rounded-full pointer-events-none" />
       
       <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
         <div className="space-y-1">
-          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white flex flex-wrap items-center gap-3 md:gap-4">
-            Flow Analytics
+          <h1 className="text-2xl md:text-5xl font-black tracking-tighter text-white flex flex-wrap items-center gap-3 md:gap-4 uppercase italic">
+            Flow Intelligence
             <div className="px-3 py-1 bg-accent-blue/10 border border-accent-blue/20 rounded-full flex items-center gap-2 shrink-0">
-               <TrendingUp className="w-3 h-3 text-accent-blue" />
-               <span className="text-[10px] font-bold text-accent-blue font-mono uppercase">OPTIMIZED</span>
+               <Activity className="w-3 h-3 text-accent-blue" />
+               <span className="text-[10px] font-black text-accent-blue font-mono uppercase tracking-widest">Neural_Sync_v4.2</span>
             </div>
           </h1>
-          <p className="text-sm text-slate-400 font-medium max-w-2xl leading-relaxed">
-            Neural insights into traffic velocity, commuter throughput, and AI-predicted bottleneck scores for the IT corridor.
-          </p>
+          <div className="flex flex-wrap items-center gap-4 mt-2">
+             <div className="flex items-center gap-2 px-2 py-0.5 bg-white/2 border border-white/5 rounded text-[9px] font-mono text-slate-500 uppercase tracking-tighter">
+                Model_Confidence: <span className="text-emerald-500">98.24%</span>
+             </div>
+             <div className="flex items-center gap-2 px-2 py-0.5 bg-white/2 border border-white/5 rounded text-[9px] font-mono text-slate-500 uppercase tracking-tighter">
+                Inference_Latency: <span className="text-accent-blue">12.4ms</span>
+             </div>
+          </div>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">
-          <button className="flex-1 sm:flex-none px-4 py-2.5 glass-panel border-white/10 text-white font-bold text-[10px] flex items-center justify-center gap-2 hover:bg-white/5 transition-all uppercase tracking-widest">
-            <Filter className="w-4 h-4" />
-             Last 7 Days
-          </button>
-          <button className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-accent-blue text-background font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95 uppercase tracking-tighter">
+          <button className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-accent-blue text-background font-black text-xs shadow-[0_0_20px_rgba(59,130,246,0.3)] flex items-center justify-center gap-2 transition-transform active:scale-95 uppercase tracking-widest">
              <BarChart3 className="w-4 h-4" />
-             Export
+             Extract Neural Log
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
         {/* Throughput Analytics */}
-        <div className="glass-panel p-8 border-white/5 bg-white/2 space-y-8">
+        <div className="glass-panel p-6 md:p-8 border-white/5 bg-white/2 space-y-8 relative overflow-hidden">
+           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-blue to-transparent" />
            <div className="flex items-center justify-between">
               <div>
-                 <h3 className="text-xl font-bold text-white tracking-tight">People Throughput vs. Vehicle Volume</h3>
-                 <p className="text-slate-500 text-xs">A metric to determine 'Quality of Flow' by counting people in high-occupancy corridors.</p>
+                 <h3 className="text-xl font-black text-white tracking-tighter uppercase italic">Throughput Velocity Matrix</h3>
+                 <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest">Global flow saturation vs. Physical vehicle density</p>
               </div>
            </div>
 
