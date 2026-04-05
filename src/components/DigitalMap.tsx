@@ -57,43 +57,51 @@ export default function DigitalMap() {
       libraries: ["places", "visualization"],
     });
 
-    loader.load().then((google) => {
-      const mapObj = new google.maps.Map(mapRef.current as HTMLElement, {
-        center: MAP_CENTER,
-        zoom: 15,
-        disableDefaultUI: true,
-        styles: [
-          { elementType: "geometry", stylers: [{ color: "#020617" }] },
-          { elementType: "labels.text.stroke", stylers: [{ color: "#020617" }] },
-          { elementType: "labels.text.fill", stylers: [{ color: "#475569" }] },
-          { featureType: "road", elementType: "geometry", stylers: [{ color: "#1e293b" }] },
-          { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#334155" }] },
-          { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
-          { featureType: "water", elementType: "geometry", stylers: [{ color: "#0f172a" }] },
-          { featureType: "transit", stylers: [{ visibility: "off" }] },
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          { featureType: "administrative", stylers: [{ visibility: "off" }] },
-        ],
-      });
-
-      setMap(mapObj);
-
-      // Add Pulse Junctions
-      JUNCTIONS.forEach(junction => {
-        const color = junction.congestion > 0.7 ? "#f43f5e" : junction.congestion > 0.4 ? "#fb923c" : "#22d3ee";
+    const initMap = async () => {
+      try {
+        const { Map } = await (loader as any).importLibrary("maps");
         
-        new google.maps.Circle({
-          strokeColor: color,
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: color,
-          fillOpacity: 0.35,
-          map: mapObj,
-          center: { lat: junction.lat, lng: junction.lng },
-          radius: 150 * (junction.congestion + 0.5),
+        const mapObj = new Map(mapRef.current as HTMLElement, {
+          center: MAP_CENTER,
+          zoom: 15,
+          disableDefaultUI: true,
+          styles: [
+            { elementType: "geometry", stylers: [{ color: "#020617" }] },
+            { elementType: "labels.text.stroke", stylers: [{ color: "#020617" }] },
+            { elementType: "labels.text.fill", stylers: [{ color: "#475569" }] },
+            { featureType: "road", elementType: "geometry", stylers: [{ color: "#1e293b" }] },
+            { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#334155" }] },
+            { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
+            { featureType: "water", elementType: "geometry", stylers: [{ color: "#0f172a" }] },
+            { featureType: "transit", stylers: [{ visibility: "off" }] },
+            { featureType: "poi", stylers: [{ visibility: "off" }] },
+            { featureType: "administrative", stylers: [{ visibility: "off" }] },
+          ],
         });
-      });
-    });
+
+        setMap(mapObj);
+
+        // Add Pulse Junctions
+        JUNCTIONS.forEach(junction => {
+          const color = junction.congestion > 0.7 ? "#f43f5e" : junction.congestion > 0.4 ? "#fb923c" : "#22d3ee";
+          
+          new google.maps.Circle({
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.35,
+            map: mapObj,
+            center: { lat: junction.lat, lng: junction.lng },
+            radius: 150 * (junction.congestion + 0.5),
+          });
+        });
+      } catch (e) {
+        console.error("Google Maps failed to load", e);
+      }
+    };
+
+    initMap();
   }, []);
 
   return (
